@@ -154,6 +154,136 @@ public class Client {
         Internally heap is a complete binary tree
         where the root is either min/max based on heap type
          */
-        //Break of 10 min - 10:31 PM
+
+        /*
+        Comparable and Comparator interface
+         */
+
+        String s1 = "Umang";
+        String s2 = "Anmol";
+        System.out.println("Testing compareto method " + s1.compareTo(s2)); // +ive
+        System.out.println("Testing compareto method " + s2.compareTo(s1)); //-ive
+
+        Queue<String> q3 = new PriorityQueue<>(new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) { //s1 = "Umang", s2 = "Anmol"
+                //you tell your order
+                //if you want s1 to come first, return negative value
+                //if you want s2 to come first, return positive value
+                //return zero - order doesn't matter
+                //if s1 < s2 => -ive else +ive s1 = Umang, s2 = Anmol
+                return s2.compareTo(s1);
+
+                //if s1 < s2 => -ive => s1 will come first
+            }
+        });
+
+        q3.offer("Umang");
+        q3.offer("Rajneesh");
+        q3.offer("Anmol");
+        //< > <= >= Lexicographically
+
+        while(!q3.isEmpty()){
+            System.out.println(q3.peek());
+            q3.poll();
+        }
+
+        //Whenever you want to disturb/distort the natural ordering of elements, you should think about comparator
+        //Custom sorting - Comparators
+
+
+        Student std1 = new Student("Umang", 26);
+        Student std2 = new Student("Anmol", 30);
+        Student std3 = new Student("Vishnu", 29);
+
+        List<Student> lsStudents = new ArrayList<>();
+        lsStudents.add(std1);
+        lsStudents.add(std2);
+        lsStudents.add(std3);
+
+
+
+        /*
+
+         */
+        System.out.println("Before sorting");
+        for(Student st: lsStudents){
+            System.out.println(st.name + " " + st.age);
+        }
+
+        Collections.sort(lsStudents);
+
+        System.out.println("After sorting without comparators");
+        for(Student st: lsStudents){
+            System.out.println(st.name + " " + st.age);
+        }
+
+
+
+
+        Collections.sort(lsStudents, new AgeComparator());
+
+
+        System.out.println("Sorted using age comparator");
+
+
+
+
+        for(Student st: lsStudents){
+            System.out.println(st.name + " " + st.age);
+        }
+
+        List<Integer> lsIntegers = new ArrayList<>();
+        lsIntegers.add(1);
+        lsIntegers.add(5);
+        lsIntegers.add(2);
+        System.out.println(lsIntegers);
+
+        Collections.sort(lsIntegers, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer a, Integer b) {
+                //a to come first when a > b => decreasing order
+                if(a > b){
+                    return -1;
+                }else if(b > a){
+                    return 1;
+                }else {
+                    return 0;
+                }
+            }
+        });
+
+        System.out.println(lsIntegers);
     }
+
+    /*
+    Comparable is used to define the natural ordering of any class.
+    Comparator is used to define custom sorting to override the natural ordering.
+     */
+
+    Map<Integer, Integer > mp1 = new HashMap<>(); //HW1
+    Map<Integer, String> mp2 = new TreeMap<>(); //HW2
+
+    //Read the difference between hashmap and treemap
+    //Hint - hashset and treeset
 }
+
+
+/*
+Selection sort
+
+for(){
+    for(){
+        if(comapre(a[i], a[j]){
+
+
+
+Merge sort
+
+void merge(int[], int[]){
+    p1 p2
+
+
+    if(comapre(a[p1], b[p2])){
+       ...
+ */
