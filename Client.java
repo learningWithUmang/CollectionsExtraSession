@@ -192,9 +192,9 @@ public class Client {
         //Custom sorting - Comparators
 
 
-        Student std1 = new Student("Umang", 26);
-        Student std2 = new Student("Anmol", 30);
-        Student std3 = new Student("Vishnu", 29);
+        Student std1 = new Student("Umang", 26,1);
+        Student std2 = new Student("Anmol", 30,2);
+        Student std3 = new Student("Vishnu", 29,3);
 
         List<Student> lsStudents = new ArrayList<>();
         lsStudents.add(std1);
