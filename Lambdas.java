@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Lambdas {
     /*
@@ -136,6 +135,180 @@ public class Lambdas {
         //directly provide the method implementation in the form of a lambda expression
         //5 minutes
         //Streams
+
+        /*
+        Stream - data flow like a river
+
+        Data source (DB)
+        1. Bring all the products from the database(disk) to your memory
+        2. 10k products in your memory
+
+        products = [] , 10k products in your memory
+        for(Product p : products){
+        //3000th products, 2999 previous
+            print(p.getName());
+        }
+
+        Stream attached to a data source
+         */
+
+        List<Integer> ls1 = List.of(1,5,2,3,9,8,6);
+
+        Stream<Integer> s1 = ls1.stream(); //pipeline
+        //System.out.println(s1.limit(2).count());
+
+        //s1.sorted();
+
+        //On top of a stream, you can run multiple methods
+        //[------] ----> m1 -----> m2 ----> m3 ---> mn ---> output
+        //intermediate, terminal methods
+        //you can use lambdas to implement the method code inside the streams
+        s1.forEach((elem) -> {
+            System.out.print(elem + " ");
+        });
+        System.out.println();
+
+        //filter, map, reduce, limit, forEach are stream methods
+
+        List<Integer> filteredElements = ls1
+                .stream()
+                .filter((elem) -> elem % 2 == 0)
+                .collect(Collectors.toList());
+
+        System.out.println(filteredElements);
+
+
+        Long countOfEvenElements = ls1
+                .stream()
+                .filter((elem) -> elem % 2 == 0)
+                .count();
+
+        System.out.println(countOfEvenElements);
+
+        Stream<Integer> s4 = ls1.stream();
+
+        List<Integer> filteredElementsSquares =
+                s4
+                .filter((elem) -> elem % 2 == 0)
+                .map((elem) -> elem * elem)
+                .collect(Collectors.toList());
+
+        //s4.sorted();
+
+
+
+        System.out.println(filteredElementsSquares);
+
+        //HW - I can get for every element, what's the frequency
+        //entrySet
+        //forEach
+        //groupbY
+
+        List<Integer> filteredElementsSquaresSorted = ls1
+                .stream()
+                .filter((elem) -> elem % 2 == 0)
+                .map((elem) -> elem * elem)
+                .sorted((a, b) -> b - a)
+                .collect(Collectors.toList());
+
+        System.out.println(filteredElementsSquaresSorted);
+
+        Optional<Integer> filteredElementsSquaresSortedFirstElem = ls1
+                .stream()
+                .filter((elem) -> elem % 2 == 0)
+                .map((elem) -> elem * elem)
+                .sorted((a, b) -> b - a)
+                .findFirst();
+
+        //optional variables are used when it can be null
+
+        if(filteredElementsSquaresSortedFirstElem.isPresent()){
+            System.out.println(filteredElementsSquaresSortedFirstElem.get());
+        }else{
+            System.out.println("All elements were odd in the list");
+        }
+
+        //reduce - decrease
+        //takes a collection of elements and reduces it to a single value
+
+        Integer sum = 0;
+        for(Integer elem: ls1){
+            sum += elem;
+        }
+
+        System.out.println("Sum of all elements : " + sum);
+
+        Optional<Integer> sum2 = ls1
+                .stream()
+                .reduce((a, b) -> a + b);
+
+        if(sum2.isPresent()) {
+            System.out.println(sum2.get());
+        }else{
+            System.out.println("List was empty");
+        }
+
+        Optional<Integer> sumOfallfilteredElements = ls1
+                .stream()
+                .filter((elem) -> elem % 2 == 0)
+                .map((elem) -> elem * elem)
+                .sorted((a, b) -> b - a)
+                .reduce((a,b) -> a + b);
+
+        Integer sumOfallfilteredElements2 = ls1
+                .stream()
+                .filter((elem) -> elem % 2 == 0)
+                .map((elem) -> elem * elem)
+                .sorted((a, b) -> b - a)
+                .reduce(0, (a,b) -> a + b);
+
+
+
+
+
+
+
+        if(sumOfallfilteredElements.isPresent()){
+            System.out.println(sumOfallfilteredElements.get());
+        }
+
+        //Streams -> optimises the time as well as memory usage internally
+        //streams
+
+        Optional<Integer> minOfAll = ls1
+                .stream()
+                .filter((elem) -> elem % 2 == 0)
+                .map((elem) -> elem * elem)
+                .sorted((a, b) -> b - a)
+                .reduce((a,b) -> Math.min(a,b));
+
+        System.out.println(minOfAll.get());
+
+        Integer minOfAll2 = ls1
+                .stream()
+                .filter((elem) -> elem % 2 == 0)
+                .map((elem) -> elem * elem)
+                .sorted((a, b) -> b - a)
+                .reduce(Integer.MAX_VALUE, (a,b) -> Math.min(a,b));
+
+        System.out.println(minOfAll2);
+
+        /*
+        1. Readability and Conciseness : Java introduced various methods also with the streams that we will be seeing after some time which makes the code much readable and concise too.
+
+        2. Parallel Execution : Streams make it very easy to implement parallelism we can have parallel lines to managae the data fastly and efficiently.
+
+        3. Lazy Evaluvation : Stream will not evaluvate an operation unless needed. For example: I can have a list and using the streams I can multiply all the elements by 2 without evaluvation then remove some element with some condition and Streams will do the evaluvation only once we call it. This reuslts in huge performace gains.
+        done with the class
+
+         */
+
+        /*
+        Beautifying your code.
+        keep learning/reading
+        
+         */
+
     }
 }
 
